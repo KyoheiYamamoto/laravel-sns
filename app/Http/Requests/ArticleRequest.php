@@ -6,6 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class ArticleRequest extends FormRequest
 {
+  
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -28,6 +29,7 @@ class ArticleRequest extends FormRequest
             'body' => 'required|max:500',
         ];
     }
+
     public function attributes()
     {
         return [
