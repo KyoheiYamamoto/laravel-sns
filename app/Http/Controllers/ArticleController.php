@@ -3,14 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Article;
-use Illuminate\Http\Request;
 use App\Http\Requests\ArticleRequest;
+use Illuminate\Http\Request;
 
 class ArticleController extends Controller
 {
     public function __construct()
     {
-        $this->authorizeResource(Article::class,'article');
+        $this->authorizeResource(Article::class, 'article');
     }
 
     public function index()
@@ -27,12 +27,12 @@ class ArticleController extends Controller
 
     public function store(ArticleRequest $request, Article $article)
     {
-        $article->title = $request->title;
-        $article->body = $request->body;
-        $article->user_id  = $request->user()->id;
+        $article->fill($request->all());
+        $article->user_id = $request->user()->id;
         $article->save();
         return redirect()->route('articles.index');
     }
+
     public function edit(Article $article)
     {
         return view('articles.edit', ['article' => $article]);
@@ -52,6 +52,27 @@ class ArticleController extends Controller
 
     public function show(Article $article)
     {
-        return view('articles.show' ,['article' => $article]);
+        return view('articles.show', ['article' => $article]);
+    }
+
+    public function like(Request $request, Article $article)
+    {
+        $article->likes()->detach($request->user()->id);
+        $article->likes()->attach($request->user()->id);
+
+        return [
+            'id' => $article->id,
+            'countLikes' => $article->count_likes,
+        ];
+    }
+
+    public function unlike(Request $request, Article $article)
+    {
+        $article->likes()->detach($request->user()->id);
+
+        return [
+            'id' => $article->id,
+            'countLikes' => $article->count_likes,
+        ];
     }
 }
