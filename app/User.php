@@ -44,13 +44,16 @@ class User extends Authenticatable
     {
         $this->notify(new PasswordResetNotification($token, new BareMail()));
     }
-    public function followers(): BelongsToMany{
-        return $this->belongsToMany('App\User','follows','followee_id','follower_id')->withTimestamps();
+
+    public function followers(): BelongsToMany
+    {
+        return $this->belongsToMany('App\User', 'follows', 'followee_id', 'follower_id')->withTimestamps();
     }
 
-    public function isFollowedBy(?User $user): bool{
+    public function isFollowedBy(?User $user): bool
+    {
         return $user
-         ? (bool)$this->followers()->where('id',$user->id)->count()
-         : false;
+            ? (bool)$this->followers->where('id', $user->id)->count()
+            : false;
     }
 }
