@@ -61,12 +61,10 @@
           ? this.unfollow()
           : this.follow()
       },
-      
       async follow() {
         const response = await axios.put(this.endpoint)
         this.isFollowedBy = true
       },
-
       async unfollow() {
         const response = await axios.delete(this.endpoint)
         this.isFollowedBy = false

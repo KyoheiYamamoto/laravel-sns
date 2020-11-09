@@ -48,7 +48,7 @@ class User extends Authenticatable
 
     public function articles(): HasMany
     {
-        return $this->HasMany('App\article');
+        return $this->hasMany('App\Article');
     }
 
     public function followers(): BelongsToMany
@@ -58,7 +58,7 @@ class User extends Authenticatable
 
     public function followings(): BelongsToMany
     {
-       return $this->belongsToMany('App\User', 'follows', 'followee_id', 'follower_id')->withTimestamps();
+        return $this->belongsToMany('App\User', 'follows', 'follower_id', 'followee_id')->withTimestamps();
     }
 
     public function likes(): BelongsToMany
@@ -77,6 +77,7 @@ class User extends Authenticatable
     {
         return $this->followers->count();
     }
+
     public function getCountFollowingsAttribute(): int
     {
         return $this->followings->count();

@@ -9,16 +9,15 @@
     </li>
     @endguest
 
-
     @guest
     <li class="nav-item">
-      <a class="nav-link" href="{{route('login')}}">ログイン</a>
+      <a class="nav-link" href="{{ route('login') }}">ログイン</a>
     </li>
     @endguest
 
     @auth
     <li class="nav-item">
-      <a class="nav-link" href="{{route('articles.create')}}"><i class="fas fa-pen mr-1"></i>投稿する</a>
+      <a class="nav-link" href="{{ route('articles.create') }}"><i class="fas fa-pen mr-1"></i>投稿する</a>
     </li>
     @endauth
 
